@@ -261,6 +261,9 @@ class _MyHomePageState extends State<MyHomePage> {
       _isWonTheMatch = false;
       _bowlersInfo = [[], [], [], [], []];
       _bowler = ["B1", "B2", "B3", "B4", "B5"];
+      _onCreaseBatsman = "P1";
+      _runnerBatsman = "P2";
+      _currentBowler = "";
     });
   }
 
