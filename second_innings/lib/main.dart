@@ -30,9 +30,6 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   Random randomScore = new Random();
-  int _counter = 0;
-  int _minScore = 30;
-  int _maxScore = 90;
   List<String> _players = ["P1", "P2", "P3", "P4", "P5"];
   List<String> _bowler = ["B1", "B2", "B3", "B4", "B5"];
   List<String> _ballValue = ["0", "1", "2", "3", "4", "6", "W", "NB"];
@@ -49,14 +46,6 @@ class _MyHomePageState extends State<MyHomePage> {
   bool _isMatchOver = false;
   bool _isWonTheMatch = false;
   bool _matchStarted = false;
-
-  void _incrementCounter() {
-    setState(() {
-      int _randomValue = randomScore.nextInt(_maxScore - _minScore);
-      print(_randomValue);
-      _counter = _minScore + _randomValue;
-    });
-  }
 
   Widget _targetScoreBoard() {
     return Row(
