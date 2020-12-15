@@ -151,24 +151,26 @@ class _MyHomePageState extends State<MyHomePage> {
             _swapBatsman();
           }
 
-          if (_numberOfBalls < 5) {
-            _numberOfBalls++;
-            _bowlersInfo[_numberOfOvers].add(_lastBallValue);
-          } else {
-            _numberOfBalls = 0;
-            _bowlersInfo[_numberOfOvers].add(_lastBallValue);
-            _numberOfOvers++;
-            if (_numberOfOvers != 5) {
-              int _currentBowlerIndex = Random().nextInt(_bowler.length);
-              _currentBowler = _bowler[_currentBowlerIndex];
-              _bowler.removeAt(_currentBowlerIndex);
-              _bowlersInfo[_numberOfOvers].add(_currentBowler);
+          _bowlersInfo[_numberOfOvers].add(_lastBallValue);
+
+          if (_lastBallValue != "NB") {
+            if (_numberOfBalls < 5) {
+              _numberOfBalls++;
+            } else {
+              _numberOfBalls = 0;
+              _numberOfOvers++;
+              if (_numberOfOvers != 5) {
+                int _currentBowlerIndex = Random().nextInt(_bowler.length);
+                _currentBowler = _bowler[_currentBowlerIndex];
+                _bowler.removeAt(_currentBowlerIndex);
+                _bowlersInfo[_numberOfOvers].add(_currentBowler);
+              }
+              if (_numberOfOvers == 5) {
+                _isMatchOver = true;
+                // _isWonTheMatch = false;
+              }
+              _swapBatsman();
             }
-            if (_numberOfOvers == 5) {
-              _isMatchOver = true;
-              // _isWonTheMatch = false;
-            }
-            _swapBatsman();
           }
         }
       }
@@ -271,7 +273,7 @@ class _MyHomePageState extends State<MyHomePage> {
     List<Container> _childrens = [];
     for (var _eachBallInfo in ballInfo) {
       _childrens.add(Container(
-        width: 50,
+        width: 30,
         child: Text(
           '$_eachBallInfo     ',
         ),
