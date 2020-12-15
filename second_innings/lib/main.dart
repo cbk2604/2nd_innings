@@ -46,6 +46,7 @@ class _MyHomePageState extends State<MyHomePage> {
   bool _isMatchOver = false;
   bool _isWonTheMatch = false;
   bool _matchStarted = false;
+  int _scoreOfTheOver = 0;
 
   Widget _targetScoreBoard() {
     return Row(
@@ -131,6 +132,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
           if (int.tryParse(_lastBallValue) != null) {
             _currentScore = _currentScore + int.tryParse(_lastBallValue) ?? 0;
+            _scoreOfTheOver =
+                _scoreOfTheOver + int.tryParse(_lastBallValue) ?? 0;
+            print(_scoreOfTheOver);
             if (_currentScore >= _firstInningsScore) {
               _isMatchOver = true;
               _isWonTheMatch = true;
@@ -160,14 +164,11 @@ class _MyHomePageState extends State<MyHomePage> {
               _numberOfBalls = 0;
               _numberOfOvers++;
               if (_numberOfOvers != 5) {
-                int _currentBowlerIndex = Random().nextInt(_bowler.length);
-                _currentBowler = _bowler[_currentBowlerIndex];
-                _bowler.removeAt(_currentBowlerIndex);
-                _bowlersInfo[_numberOfOvers].add(_currentBowler);
+                _selectBowler(_scoreOfTheOver);
+                _scoreOfTheOver = 0;
               }
               if (_numberOfOvers == 5) {
                 _isMatchOver = true;
-                // _isWonTheMatch = false;
               }
               _swapBatsman();
             }
@@ -255,18 +256,28 @@ class _MyHomePageState extends State<MyHomePage> {
       _onCreaseBatsman = "P1";
       _runnerBatsman = "P2";
       _currentBowler = "";
+      _scoreOfTheOver = 0;
     });
   }
 
   void _letsStartTheInnings() {
     setState(() {
       _matchStarted = true;
+      _selectBowler(0);
+    });
+  }
 
+  void _selectBowler(int score) {
+    if (score < 10) {
       int _currentBowlerIndex = Random().nextInt(_bowler.length);
       _currentBowler = _bowler[_currentBowlerIndex];
       _bowler.removeAt(_currentBowlerIndex);
       _bowlersInfo[_numberOfOvers].add(_currentBowler);
-    });
+    } else {
+      _currentBowler = _bowler.last;
+      _bowler.removeLast();
+      _bowlersInfo[_numberOfOvers].add(_currentBowler);
+    }
   }
 
   Row _eachBallInfoForBowler(List<String> ballInfo) {
